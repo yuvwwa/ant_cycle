@@ -84,6 +84,7 @@ class Ant:
         return total
 
     def run(self, start_node, iterations):
+        path_lengths = []
         for _ in range(iterations):
             for _ in range(self.count_ants):
                 #назначаем все нужные переменные(путьб посещенные вершины, текущая вершина)
@@ -107,5 +108,14 @@ class Ant:
                         self.best_path = path
                     self.updates_pheromones(path, path_length)
             self.lower_pheromones()
-        print ("Кратчайший путь: ", " ".join(self.best_path))
+            path_lengths.append(self.min_length)
+
+        plt.plot(range(iterations), path_lengths)
+        plt.xlabel('Итерация')
+        plt.ylabel("Длина пути")
+        plt.title("Зависимость длины пути от итерации")
+        plt.grid(True)
+        plt.show()
+
+        print ("Кратчайший путь: ", " ".join(str(node) for node in self.best_path))
         print ("Длина пути: ", self.min_length)
